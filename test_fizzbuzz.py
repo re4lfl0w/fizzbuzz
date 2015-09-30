@@ -20,31 +20,52 @@ class FizzBuzzTestCase(unittest.TestCase):
         os.unlink(flask_simple.app.config['DATABASE'])
         os.remove('./flask_simple.db')
 
-    def test_zero_visit(self):
+    def test_get_zero_visit(self):
         rv = self.app.get('/1/fizzbuzz/')
         assert '0' in rv.data
 
-    def test_three_times_visit(self):
+    def test_get_three_times_visit(self):
+        for i in range(3):
+            rv = self.app.get('/1/fizzbuzz/')
+        assert '0' in rv.data
+
+    def test_get_post_three_times_visit(self):
+        for i in range(3):
+            rv = self.app.get('/1/fizzbuzz/')
+
         for i in range(3):
             rv = self.app.post('/1/fizzbuzz/')
         assert 'Fizz' in rv.data
 
-    def test_five_times_visit(self):
+    def test_post_get_three_times_visit(self):
+        for i in range(3):
+            rv = self.app.post('/1/fizzbuzz/')
+
+        for i in range(3):
+            rv = self.app.get('/1/fizzbuzz/')
+        assert 'Fizz' in rv.data
+
+    def test_post_three_times_visit(self):
+        for i in range(3):
+            rv = self.app.post('/1/fizzbuzz/')
+        assert 'Fizz' in rv.data
+
+    def test_post_five_times_visit(self):
         for i in range(5):
             rv = self.app.post('/1/fizzbuzz/')
         assert 'Buzz' in rv.data
 
-    def test_fifteen_times_visit(self):
+    def test_post_fifteen_times_visit(self):
         for i in range(15):
             rv = self.app.post('/1/fizzbuzz/')
         assert 'FizzBuzz' in rv.data
 
-    def test_sixteen_times_visit(self):
+    def test_post_sixteen_times_visit(self):
         for i in range(16):
             rv = self.app.post('/1/fizzbuzz/')
         assert '16' in rv.data
 
-    def test_a_hundred_times_visit(self):
+    def test_post_a_hundred_times_visit(self):
         for i in range(100):
             rv = self.app.post('/1/fizzbuzz/')
         assert 'Buzz' in rv.data
